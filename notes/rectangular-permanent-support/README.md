@@ -2,7 +2,7 @@
 
 Let $F(X)$ be the sum over injections of the four-row products in $J+X$, minus 120, where $J$ is the all-ones $4\times5$ matrix. Suppose $F$ vanishes on a seven-dimensional complex linear space $L$. A position belongs to its support if its entry is nonzero on some member of $L$.
 
-The [support enumeration](support_bound.py) excludes every support of size at most 13. Of the 53 orbits on 14 positions under independent row and column permutations, only four admit an isotropic seven-plane for the Hessian at zero on the total-sum-zero hyperplane. In each of the four cases its one-dimensional radical must lie in $L$. In two cases the permanent varies on that line. We exclude the remaining two orbits below. The statement for 15 or more positions remains open.
+The [support enumeration](support_bound.py) excludes every support of size at most 13. Of the 53 orbits on 14 positions under independent row and column permutations, only four admit an isotropic seven-plane for the Hessian at zero on the total-sum-zero hyperplane. In each of the four cases its one-dimensional radical must lie in $L$. In two cases the permanent varies on that line. We exclude the remaining two orbits below. At size 15, the [next support tests](fifteen.md) exclude five of 27 orbits. The existence of a seven-dimensional space remains open.
 
 ## Row masks (1,15,15,31)
 
