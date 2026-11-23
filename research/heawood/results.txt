@@ -1,0 +1,29 @@
+point automorphisms 168
+point-line duality [7, 8, 9, 10, 11, 12, 13, 0, 1, 2, 3, 4, 5, 6]
+0 7
+01 21
+012 28
+013 7
+0123 28
+0125 7
+01234 21
+012345 7
+0123456 1
+0, budget 2: UNSAT, 4 first-gate classes, 4 visits
+0, budget 3: SAT at first gate 1 2 1
+01, budget 6: UNSAT, 14 first-gate classes, 16 visits
+01, budget 7: SAT at first gate 2 3 1
+012, budget 10: UNSAT, 18 first-gate classes, 244 visits
+012, budget 11: SAT at first gate 3 4 1
+013, budget 10: UNSAT, 14 first-gate classes, 179 visits
+013, budget 11: SAT at first gate 3 4 1
+0123, budget 14: UNSAT, 32 first-gate classes, 241860 visits
+0123, budget 15: SAT at first gate 4 5 1
+0125, budget 14: UNSAT, 10 first-gate classes, 246641 visits
+0125, budget 15: SAT at first gate 4 5 1
+01234, budget 17: UNSAT, 34 first-gate classes, 9086822 visits
+Heawood lower bound 21
+and [(22, 91)]
+or [(21, 49), (22, 42)]
+six points budget 19 depth 6 EXCLUDED visited prefixes 718
+full graph budget 21 depth 2 EXCLUDED visited prefixes 3
