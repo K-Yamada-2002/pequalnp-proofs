@@ -98,4 +98,4 @@ sage -python lift15.py --prime 13 3,7,31,31
 sage -python lift15.py --prime 7 7,7,15,31
 ```
 
-This list covers five of the 27 support orbits of size 15. The other 22 are unclassified by the results reported here.
+This list covers five of the 27 support orbits of size 15. The [full-row functional test](row_normal15.md) excludes nine additional orbits, bringing the published total to 14.
