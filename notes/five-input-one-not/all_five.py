@@ -59,21 +59,27 @@ def solve(target, n, size, free_inversions):
             return ()
         if left == 0 or len(live) > left+1:
             return None
-        mask = 0
-        for wire in live:
-            mask |= separates(wire)
-        if mask != full:
-            return None
         for a, b in combinations(live, 2):
             rest = tuple(w for w in live if w != a and w != b)
+            outside = 0
+            for wire in rest:
+                outside |= separates(wire)
             options = [('and', a & b), ('or', a | b)]
             if free_inversions:
                 options.extend([('left', a & (modulus ^ b)), ('right', (modulus ^ a) & b)])
             for op, new in options:
                 if new == 0 or new in live:
                     continue
+                # Only memoize successor states that can still separate the target.
+                # Dropping an operand is valid only if its last needed use was this gate.
+                base = outside | separates(new)
                 for keep in ((), (a,), (b,), (a,b)):
                     if 1 + len(rest) + len(keep) > left:
+                        continue
+                    covered = base
+                    for wire in keep:
+                        covered |= separates(wire)
+                    if covered != full:
                         continue
                     tail = visit(tuple(sorted((*rest,*keep,new))), left-1)
                     if tail is not None:

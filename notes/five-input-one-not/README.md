@@ -2,6 +2,8 @@
 
 For every monotone Boolean function on five labelled inputs, a binary AND/OR circuit achieves the same minimum gate count as a binary AND/OR/NOT circuit allowed at most one NOT. There are 7,581 such functions. This result concerns a single output and counts each gate once, even when later gates reuse it.
 
+A subsequent exhaustive calculation gives the exact minimum for each function even with unrestricted NOT gates. The histogram, witnesses and reproduction instructions are in [Exact circuit sizes](UNRESTRICTED.md).
+
 The circuit semantics are those of `PEqualNP.CircuitLowerBounds`. A gate may have zero, one or two operands. An empty AND returns true, an empty OR returns false, NOT uses its first operand and defaults to true, and an out-of-range wire reads false.
 
 ## Functions that depend on all five inputs
