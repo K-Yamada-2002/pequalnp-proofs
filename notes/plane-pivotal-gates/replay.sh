@@ -15,6 +15,7 @@ import PencilPrice
 #print axioms PlaneLocalPrice.sound_of_local_cap
 #print axioms PlaneLocalPrice.pencil_masks
 #print axioms PlaneLocalPrice.pencil_child
+#print axioms PlaneLocalPrice.small_order
 LEAN
 lean "$out/Audit.lean"
 python3 "$src/check_examples.py"

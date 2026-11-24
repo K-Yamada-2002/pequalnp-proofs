@@ -1,6 +1,7 @@
 import SparseFailure
 import UpwardPrice
 import Pencil
+import Mathlib.Tactic.Linarith
 import Mathlib.Data.Fintype.Sum
 import Mathlib.Logic.Equiv.Fin.Basic
 
@@ -159,5 +160,29 @@ theorem pencil_child :
   apply pencil_or_lower I C hq order (fun l => by simpa only [Fintype.card_subtype] using lines l) pairs mono on
   intro z small indep
   exact sparse z (by simpa only [Fintype.card_subtype] using small) indep
+
+-- The posted size inequality throughout the indicated range of orders.
+theorem small_order :
+    ∀ (q N : ℕ) (I : Fin N → Fin N → Prop) [DecidableRel I] (C : Circuit),
+      2 ≤ q → q ≤ 198 → N = q ^ 2 + q + 1 →
+      (∀ l : Fin N, (Finset.univ.filter (fun p => I p l)).card = q + 1) →
+      (∀ p p' : Fin N, p ≠ p' → ∃! l : Fin N, I p l ∧ I p' l) →
+      Monotone2 C →
+      (∀ p l : Fin N, I p l → circuitFun (N + N) C
+        (fun k => decide (k = Fin.castAdd N p ∨ k = Fin.natAdd N l)) = true) →
+      (∀ z : Fin (N + N) → Bool,
+        (Finset.univ.filter (fun l : Fin N => z (Fin.natAdd N l) = true)).card ≤ q →
+        (¬ ∃ p l : Fin N, I p l ∧ z (Fin.castAdd N p) = true ∧ z (Fin.natAdd N l) = true) →
+        circuitFun (N + N) C z = false) →
+      N * q ≤ 100 * C.size := by
+  intro q N I dec C hq small order lines pairs mono on sparse
+  have bound := pencil_or_lower I C hq order lines pairs mono on sparse
+  have lengthBound := List.length_filter_le (fun g : Gate => isOr g.op) C.gates
+  have h := Nat.mul_le_mul_right (q^2) (show q + 2 ≤ 200 by omega)
+  have h' := Nat.mul_le_mul_right q (show 1 ≤ q by omega)
+  calc
+    N * q = (q^2+q+1)*q := congrArg (fun n : ℕ => n*q) order
+    _ ≤ 100*(2*q^2+1) := by nlinarith only [h,h']
+    _ ≤ 100*C.size := Nat.mul_le_mul_left 100 (bound.trans lengthBound)
 
 end PlaneLocalPrice

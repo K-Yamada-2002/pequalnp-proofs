@@ -12,7 +12,7 @@ $$
   |\bigcup F|\le |F|+\text{number of OR gates processed}.
 $$
 
-Replacing a new label by its one or two parents proves the inductive step. Hence at least $2q^2+1$ OR gates occur. The hypotheses on incidence are exactly the degree and unique-join hypotheses of the official problem. The proof derives point degree and line intersection. In particular the official numerical target follows for $2\le q\le198$, since $(q^2+q+1)q\le100(2q^2+1)$ in that range.
+Replacing a new label by its one or two parents proves the inductive step. Hence at least $2q^2+1$ OR gates occur. The hypotheses on incidence are exactly the degree and unique-join hypotheses of the official problem. The proof derives point degree and line intersection. In particular the official numerical target follows for $2\le q\le198$, since $(q^2+q+1)q\le100(2q^2+1)$ in that range. The theorem `PlaneLocalPrice.small_order` proves the posted size inequality directly with this order restriction.
 
 ## A false positive forcing many AND gates
 
