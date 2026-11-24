@@ -135,7 +135,18 @@ theorem pencil_or_lower {q N : ℕ} (I : Fin N → Fin N → Prop) [DecidableRel
 
 -- The first child of the submitted decomposition, using only public constants.
 theorem pencil_child :
-    ∀ (q N : ℕ) (I : Fin N → Fin N → Prop) [DecidableRel I] (C : PEqualNP.CircuitLowerBounds.Circuit), 2 ≤ q → N = q ^ 2 + q + 1 → (∀ l : Fin N, (Finset.univ.filter (fun p => I p l)).card = q + 1) → (∀ p p' : Fin N, p ≠ p' → ∃! l : Fin N, I p l ∧ I p' l) → PEqualNP.MetaComplexity.Monotone2 C → (∀ p l : Fin N, I p l → PEqualNP.MetaComplexity.circuitFun (N + N) C (fun k => decide (k = Fin.castAdd N p ∨ k = Fin.natAdd N l)) = true) → (∀ z : Fin (N + N) → Bool, (Finset.univ.filter (fun l : Fin N => z (Fin.natAdd N l) = true)).card ≤ q → (¬ ∃ p l : Fin N, I p l ∧ z (Fin.castAdd N p) = true ∧ z (Fin.natAdd N l) = true) → PEqualNP.MetaComplexity.circuitFun (N + N) C z = false) → 2 * q ^ 2 + 1 ≤ (C.gates.filter (fun g => g.op.eval [true, false])).length := by
+    ∀ (q N : ℕ) (I : Fin N → Fin N → Prop) [DecidableRel I] (C : Circuit),
+      2 ≤ q → N = q ^ 2 + q + 1 →
+      (∀ l : Fin N, Fintype.card {p : Fin N // I p l} = q + 1) →
+      (∀ p p' : Fin N, p ≠ p' → ∃! l : Fin N, I p l ∧ I p' l) →
+      Monotone2 C →
+      (∀ p l : Fin N, I p l → circuitFun (N + N) C
+        (fun k => decide (k = Fin.castAdd N p ∨ k = Fin.natAdd N l)) = true) →
+      (∀ z : Fin (N + N) → Bool,
+        Fintype.card {l : Fin N // z (Fin.natAdd N l) = true} ≤ q →
+        (¬ ∃ p l : Fin N, I p l ∧ z (Fin.castAdd N p) = true ∧ z (Fin.natAdd N l) = true) →
+        circuitFun (N + N) C z = false) →
+      2 * q ^ 2 + 1 ≤ (C.gates.filter (fun g => g.op.eval [true, false])).length := by
   intro q N I dec C hq order lines pairs mono on sparse
   have equal : C.gates.filter (fun g => isOr g.op) =
       C.gates.filter (fun g => g.op.eval [true,false]) := by
@@ -145,6 +156,8 @@ theorem pencil_child :
       simpa [Set.mem_insert_iff,Set.mem_singleton_iff] using (mono g hg).1
     rcases ops with h | h <;> simp [h,isOr,GateOp.eval]
   rw [← equal]
-  exact pencil_or_lower I C hq order lines pairs mono on sparse
+  apply pencil_or_lower I C hq order (fun l => by simpa only [Fintype.card_subtype] using lines l) pairs mono on
+  intro z small indep
+  exact sparse z (by simpa only [Fintype.card_subtype] using small) indep
 
 end PlaneLocalPrice
